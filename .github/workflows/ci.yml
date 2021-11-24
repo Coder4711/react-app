@@ -39,11 +39,11 @@ jobs:
         run: npm run build
       #- run: npm install -g surge
       - name: Upload Build Folder
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v1
         with:
           name: build
           path: build
-      - uses: actions/download-artifact
       - name: Deploy to Stating
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain screeching-hate.surge.sh
