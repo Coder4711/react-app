@@ -34,7 +34,7 @@ jobs:
         with:
           name: code-coverage
           path: coverage
-          
+
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
@@ -45,7 +45,7 @@ jobs:
           name: build
           path: build
       - uses: actions/download-artifact
-      
+
       - name: Deploy to Stating
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain screeching-hate.surge.sh
