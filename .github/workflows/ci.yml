@@ -17,7 +17,7 @@ jobs:
           #key: mykey
           #key: node-¢{{ hashFiles('**/packages-lock.json')}}
           key: ${{ runner.os }}-node-¢{{ hashFiles('**/packages-lock.json')}}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Use NodeJS
