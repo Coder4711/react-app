@@ -44,6 +44,10 @@ jobs:
         with:
           name: build
           path: build
+      - name: Dsiplay
+        run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.refs  }}
       - name: Zip Assets
         if: github.event_name == 'pull_request' && github.refs == 'refs/heads/main'
         run: |
