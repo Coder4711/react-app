@@ -47,15 +47,16 @@ jobs:
       - name: Dsiplay
         run: |
           echo ${{ github.event_name }}
-          echo ${{ github.refs  }}
+          echo ${{ github.ref  }}
       - name: Zip Assets
-        if: github.event_name == 'pull_request' && github.refs == 'refs/heads/main'
+        if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
+        #if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           zip -r build.zip ./build
           zip -r coverage.zip ./coverage
 
       - name: Create Release
-        if: github.event_name == 'pull_request' && github.refs == 'refs/heads/main'
+        if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
