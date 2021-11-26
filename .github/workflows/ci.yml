@@ -45,10 +45,6 @@ jobs:
         with:
           name: build
           path: build
-      - name: Dsiplay
-        run: |
-          echo ${{ github.event_name }}
-          echo ${{ github.ref  }}
       - name: Display
         run: |
           echo ${{ github.event_name }}
@@ -73,10 +69,28 @@ jobs:
       #    SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
       #    SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
+      - name: Version ermitteln
+        run: echo "::set-output name=version::$(npm view react-app version)"
+        id: version
+
+      - name: Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: ls
         run: |
+          echo ${{ steps.create_release.outputs.upload_url }}
           ls -al
-      - name: upload windows artifact
+
+      - name: Upload artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-release-asset@v1
         env:
