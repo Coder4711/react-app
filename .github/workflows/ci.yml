@@ -50,8 +50,7 @@ jobs:
       - name: Versionsnummer erstellen (1.0.0 -> 1.0.1 Patch)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          npm version patch
-          echo "::set-output name=version::$(npm view react-app version)"
+          echo "::set-output name=version::$(npm version patch)"
         id: version
 
       - name: DEBUG Version anzeigen
