@@ -109,7 +109,7 @@ jobs:
           ls -al
           git branch --show-current
           git status
-          cat packages.json
+          cat package.json
       - name: Push Release to Branch 'main'
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
