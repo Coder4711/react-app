@@ -69,8 +69,11 @@ jobs:
       #    SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
       #    SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
-      - name: Version ermitteln
-        run: echo "::set-output name=version::$(npm view react-app version)"
+      - name: Version erstellen (Patch)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          npm version patch
+          echo "::set-output name=version::$(npm view react-app version)"
         id: version
 
       - name: Release
@@ -85,7 +88,8 @@ jobs:
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: ls
+
+      - name: Debug - ls
         run: |
           echo ${{ steps.create_release.outputs.upload_url }}
           ls -al
