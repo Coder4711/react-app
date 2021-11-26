@@ -47,7 +47,7 @@ jobs:
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
 
-      - name: Versionsnummer erstellen (1.0.0 -> 1.0.1 Patch)
+      - name: Versionsnummer erstellen (x.x.0 -> x.x.1 Patch)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           echo "::set-output name=version::$(npm version patch)"
@@ -100,6 +100,13 @@ jobs:
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Push Release to Branch 'main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git add -A
+          git commit -m "Release: ${{ steps.version.outputs.version }}"
+          git push
 
       #- name: Debug - ls
       #  run: |
