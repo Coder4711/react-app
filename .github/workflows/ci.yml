@@ -103,11 +103,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Push Release to Branch 'main'
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: DEBUG Git Info
         run: |
           pwd
           ls -al
+          git branch --show-current
+          git status
+      - name: Push Release to Branch 'main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
           git add -A
           git commit -m "Release: ${{ steps.version.outputs.version }}"
           git push -u origin HEAD
