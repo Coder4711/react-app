@@ -72,6 +72,8 @@ jobs:
       - name: Version erstellen (Patch)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
           npm version patch
           echo "::set-output name=version::$(npm view react-app version)"
         id: version
