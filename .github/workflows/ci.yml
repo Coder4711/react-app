@@ -41,6 +41,8 @@ jobs:
         run: |
           echo ${{ github.event_name }}
           echo ${{ github.ref  }}
+          pwd
+          ls -al
 
       - name: Git parameter setzen
         run: |
@@ -104,6 +106,8 @@ jobs:
       - name: Push Release to Branch 'main'
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          pwd
+          ls -al
           git add -A
           git commit -m "Release: ${{ steps.version.outputs.version }}"
           git push -u origin HEAD
