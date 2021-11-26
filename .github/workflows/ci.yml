@@ -51,6 +51,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           npm version patch
+          npm view react-app version
           echo "::set-output name=version::$(npm view react-app version)"
         id: version
 
