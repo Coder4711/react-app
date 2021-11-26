@@ -114,9 +114,10 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-          git add -A
-          git commit -m "Release: ${{ steps.version.outputs.version }}"
           git push github HEAD:${GITHUB_REF}
+
+      #    git add -A
+      #    git commit -m "Release: ${{ steps.version.outputs.version }}"
 
       #- name: Debug - ls
       #  run: |
