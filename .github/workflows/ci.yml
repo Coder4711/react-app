@@ -106,7 +106,7 @@ jobs:
         run: |
           git add -A
           git commit -m "Release: ${{ steps.version.outputs.version }}"
-          git push
+          git push -u origin HEAD
 
       #- name: Debug - ls
       #  run: |
